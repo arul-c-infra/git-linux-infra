@@ -404,7 +404,7 @@ Now the change is included in main.
 
 ---
 ## 15. Branching Workflow
-
+```text
 A common workflow is:
 
 main
@@ -431,38 +431,44 @@ git merge feature-name
   |
   ↓
 main
-
+```
 ---
 ## 16. Branch Naming Examples
 
+```text
 Use meaningful branch names.
 
-Linux
-linux-patching
-linux-security-update
-linux-monitoring
-linux-user-management
-AWS
-aws-ec2-project
-aws-iam-update
-aws-networking
-Docker
-docker-networking
-docker-volume
-docker-security
-Documentation
-update-readme
-add-git-documentation
-fix-documentation
+*Linux
+*linux-patching
+*linux-security-update
+*linux-monitoring
+*linux-user-management
+*AWS
+*aws-ec2-project
+*aws-iam-update
+*aws-networking
+*Docker
+*docker-networking
+*docker-volume
+*docker-security
+*Documentation
+*update-readme
+*add-git-documentation
+*fix-documentation
 
 Avoid unclear names such as:
 
-test
-new
-branch1
-abc
-mybranch
-17. Useful Branch Commands
+*test
+*new
+*branch1
+*abc
+*mybranch
+
+```
+---
+## 17. Useful Branch Commands
+
+```text
 Command	Purpose
 git branch	List local branches
 git branch <name>	Create a branch
@@ -533,3 +539,5 @@ main
             main
 
 For Linux infrastructure administration, branches help isolate changes before they are merged into the stable main branch.
+```
+---
