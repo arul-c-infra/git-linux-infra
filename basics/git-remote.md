@@ -142,38 +142,74 @@ drwxr-xr-x. 2 root root  148 Sep 23 12:38 basics
 
 ---
 
-## 4. Add a Remote Repository
+## 4. Add a Remote Repository:
 
-If you created a local repository using:
-
-```bash
-git init
-```
-
-you can connect it to GitHub using:
+**Create a repo in the server:**
 
 ```bash
-git remote add origin https://github.com/arul-c-infra/git-linux-infra.git
+[root@gitbash /]# mkdir linux-project
+[root@gitbash /]# 
+[root@gitbash /]# cd linux-project/
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git init
+Initialized empty Git repository in /linux-project/.git/
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# ls -l
+total 0
+[root@gitbash linux-project]# git config --global user.name "Arul C"
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git config --global user.mail "salemarul1991@gmail.com"
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# echo "# Linux Project" > README.md
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git add README.md
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git commit -m "Initial commit"
+[main (root-commit) 9463931] Initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+[root@gitbash linux-project]#
 ```
 
-Verify:
+**Create an empty repository on GitHub:**
 
+<img width="822" height="427" alt="image" src="https://github.com/user-attachments/assets/5d740d4a-367e-42c7-9aa4-44ab71968a82" />
+
+**Connect your local repository to GitHub:**
 ```bash
-git remote -v
+[root@gitbash linux-project]# git remote add origin https://github.com/arul-c-infra/linux-project.git
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git remote -v
+origin  https://github.com/arul-c-infra/linux-project.git (fetch)
+origin  https://github.com/arul-c-infra/linux-project.git (push)
+[root@gitbash linux-project]#
 ```
+**Generate the Token at GitHub:**
+Profile --> Settings -->Developer Settings --> Personal Token Access -->Token Classic
 
-Expected output:
-
-```text
-origin  https://github.com/arul-c-infra/git-linux-infra.git (fetch)
-origin  https://github.com/arul-c-infra/git-linux-infra.git (push)
+**Push your local repository to GitHub:**
+```bash
+[root@gitbash linux-project]# git push -u origin main
+Username for 'https://github.com': arul-c-infra
+Password for 'https://arul-c-infra@github.com': -------> Use the above generated token
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 230 bytes | 230.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/arul-c-infra/linux-project.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+[root@gitbash linux-project]# 
 ```
+**Verify the contents in the GitHub:**
+
+<img width="1846" height="392" alt="image" src="https://github.com/user-attachments/assets/8fc9e2bd-40e5-4f0d-b5b5-a5263c790046" />
 
 ---
 
 ## 5. View Detailed Remote Information
 
-Command:
+**Command:**
 
 ```bash
 git remote show origin
@@ -181,35 +217,48 @@ git remote show origin
 
 This displays information about the remote repository.
 
-Example:
+**Example:**
 
 ```text
+[root@gitbash linux-project]# git remote show origin
 * remote origin
-  Fetch URL: https://github.com/arul-c-infra/git-linux-infra.git
-  Push  URL: https://github.com/arul-c-infra/git-linux-infra.git
+  Fetch URL: https://github.com/arul-c-infra/linux-project.git
+  Push  URL: https://github.com/arul-c-infra/linux-project.git
   HEAD branch: main
+  Remote branch:
+    main tracked
+  Local branch configured for 'git pull':
+    main merges with remote main
+  Local ref configured for 'git push':
+    main pushes to main (up to date)
+[root@gitbash linux-project]# 
 ```
+
 
 ---
 
 ## 6. Rename a Remote
 
 You can rename a remote using:
-
 ```bash
 git remote rename origin upstream
 ```
 
 Check:
-
 ```bash
 git remote -v
 ```
 
-Now the remote will be called:
+**Example:**
 
 ```text
-upstream
+[root@gitbash linux-project]# git remote rename origin upstream
+Renaming remote references: 100% (1/1), done.
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git remote -v
+upstream        https://github.com/arul-c-infra/linux-project.git (fetch)
+upstream        https://github.com/arul-c-infra/linux-project.git (push)
+[root@gitbash linux-project]# 
 ```
 
 For most personal GitHub repositories, keeping the default name `origin` is recommended.
@@ -218,36 +267,63 @@ For most personal GitHub repositories, keeping the default name `origin` is reco
 
 ## 7. Change a Remote URL
 
-If the remote URL changes:
+If the remote URL changes: unix_project
 
 ```bash
-git remote set-url origin https://github.com/arul-c-infra/git-linux-infra.git
+git remote set-url origin https://github.com/arul-c-infra/unix_project.git
 ```
 
 Verify:
-
 ```bash
 git remote -v
 ```
+```bash
+[root@gitbash linux-project]# git remote rename upstream origin
+Renaming remote references: 100% (1/1), done.
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git remote set-url origin https://github.com/arul-c-infra/unix_project.git
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git remote -v
+origin  https://github.com/arul-c-infra/unix_project.git (fetch)
+origin  https://github.com/arul-c-infra/unix_project.git (push)
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git push -u origin main
+Username for 'https://github.com': arul-c-infra
+Password for 'https://arul-c-infra@github.com': 
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 230 bytes | 230.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/arul-c-infra/unix_project.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# 
+```
+**Validate the same in the GitHub:**
+
+<img width="1317" height="595" alt="image" src="https://github.com/user-attachments/assets/64e6c44d-2b3a-4e73-98f8-2ec12316cafe" />
 
 ---
 
 ## 8. Remove a Remote
 
 To remove a remote:
-
 ```bash
 git remote remove origin
 ```
 
 Verify:
-
 ```bash
 git remote
 ```
 
-No remote should be displayed.
-
+```bash
+[root@gitbash linux-project]# git remote remove origin
+[root@gitbash linux-project]# 
+[root@gitbash linux-project]# git remote -v
+[root@gitbash linux-project]# 
+```
 > Removing a remote does not delete the GitHub repository. It only removes the remote connection from your local repository.
 
 ---
@@ -263,68 +339,39 @@ git clone https://github.com/arul-c-infra/git-linux-infra.git
 Then:
 
 ```bash
-cd git-linux-infra
-```
+[root@gitbash /]# mkdir repo_clone
+[root@gitbash /]# 
+[root@gitbash /]# cd repo_clone/
+[root@gitbash repo_clone]# 
+[root@gitbash repo_clone]# 
+[root@gitbash repo_clone]# git clone https://github.com/arul-c-infra/git-linux-infra.git
+Cloning into 'git-linux-infra'...
+remote: Enumerating objects: 67, done.
+remote: Counting objects: 100% (67/67), done.
+remote: Compressing objects: 100% (62/62), done.
+remote: Total 67 (delta 20), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (67/67), 32.80 KiB | 861.00 KiB/s, done.
+Resolving deltas: 100% (20/20), done.
+[root@gitbash repo_clone]# 
+[root@gitbash repo_clone]# ls -l
+total 0
+drwxr-xr-x. 4 root root 49 Sep 23 15:50 git-linux-infra
+[root@gitbash repo_clone]# 
+[root@gitbash repo_clone]# cd git-linux-infra/
+[root@gitbash git-linux-infra]# 
+[root@gitbash git-linux-infra]# ls -l
+total 4
+-rw-r--r--. 1 root root 2519 Sep 23 15:50 README.md
+drwxr-xr-x. 2 root root  148 Sep 23 15:50 basics
+[root@gitbash git-linux-infra]#
 
-Check:
-
-```bash
-git remote -v
-```
-
-Expected:
-
-```text
+[root@gitbash git-linux-infra]# git remote -v
 origin  https://github.com/arul-c-infra/git-linux-infra.git (fetch)
 origin  https://github.com/arul-c-infra/git-linux-infra.git (push)
+[root@gitbash git-linux-infra]# 
 ```
 
 ---
-
-## 10. Local Repository to GitHub
-
-If you start with a local project:
-
-```bash
-mkdir linux-project
-cd linux-project
-git init
-```
-
-Create a file:
-
-```bash
-echo "Linux Infrastructure Project" > README.md
-```
-
-Stage it:
-
-```bash
-git add README.md
-```
-
-Commit it:
-
-```bash
-git commit -m "Initial commit"
-```
-
-Connect the GitHub repository:
-
-```bash
-git remote add origin https://github.com/arul-c-infra/linux-project.git
-```
-
-Verify:
-
-```bash
-git remote -v
-```
-
-At this point, your local repository knows where the remote GitHub repository is located.
-
----
-
 ## 11. Remote Branches
 
 To see remote branches:
@@ -336,8 +383,10 @@ git branch -r
 Example:
 
 ```text
-origin/main
-origin/linux-patching
+[root@gitbash git-linux-infra]# git branch -r
+  origin/HEAD -> origin/main
+  origin/main
+[root@gitbash git-linux-infra]# 
 ```
 
 To see both local and remote branches:
@@ -349,10 +398,20 @@ git branch -a
 Example:
 
 ```text
+[root@gitbash git-linux-infra]# git checkout -b feature-branch
+Switched to a new branch 'feature-branch'
+[root@gitbash git-linux-infra]# 
+[root@gitbash git-linux-infra]# 
+[root@gitbash git-linux-infra]# git switch main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+[root@gitbash git-linux-infra]#
+[root@gitbash git-linux-infra]# git branch -a
+  feature-branch
 * main
-  linux-patching
+  remotes/origin/HEAD -> origin/main
   remotes/origin/main
-  remotes/origin/linux-patching
+[root@gitbash git-linux-infra]# 
 ```
 
 ---
@@ -379,7 +438,10 @@ git branch -vv
 Example:
 
 ```text
-* main abc1234 [origin/main] Update README
+[root@gitbash git-linux-infra]# git branch -vv
+  feature-branch 1368f97 Update git-remote.md
+* main           1368f97 [origin/main] Update git-remote.md
+[root@gitbash git-linux-infra]# 
 ```
 
 This means the local `main` branch is tracking `origin/main`.
@@ -420,67 +482,6 @@ Local Repository
 
 ---
 
-## 14. Practical Linux Infrastructure Example
-
-Suppose you maintain Linux server documentation in GitHub.
-
-You clone the repository:
-
-```bash
-git clone https://github.com/arul-c-infra/git-linux-infra.git
-```
-
-Enter the repository:
-
-```bash
-cd git-linux-infra
-```
-
-Check the remote:
-
-```bash
-git remote -v
-```
-
-Create a documentation branch:
-
-```bash
-git switch -c linux-monitoring
-```
-
-Make changes:
-
-```bash
-vim monitoring.md
-```
-
-Stage:
-
-```bash
-git add monitoring.md
-```
-
-Commit:
-
-```bash
-git commit -m "Add Linux monitoring documentation"
-```
-
-The commit currently exists only in your local repository.
-
-Later, you can push the branch to GitHub:
-
-```bash
-git push -u origin linux-monitoring
-```
-
-This creates the remote branch:
-
-```text
-origin/linux-monitoring
-```
-
----
 
 ## 15. Difference Between Local and Remote
 
