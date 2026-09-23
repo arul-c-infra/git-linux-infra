@@ -19,17 +19,19 @@ git log
 ### Example Output
 
 ```text
-commit 2cc475c6959ddb856256d5f5d86e708fa6d3fa68
-Author: Arul C
-Date:   Wed Sep 23 2026
+[root@gitbash demogit]# git log
+commit 5bb8e2efd06872c54dd60a830ae2ada489a5116a (HEAD -> main)
+Author: Arul C <salemarul1991@gmail.com>
+Date:   Wed Sep 23 10:00:24 2026 +0000
 
-    Add Git commands reference
+    NTP conf added
 
-commit 39f556c37432fa56e227e5163b4d1a8b5e965519
-Author: Arul C
-Date:   Wed Sep 23 2026
+commit 4b393e09cdf9a4955ba7640f4ea297fa04d49d97
+Author: Arul C <salemarul1991@gmail.com>
+Date:   Wed Sep 23 09:45:09 2026 +0000
 
-    Update README.md
+    Add server documentation
+[root@gitbash demogit]# 
 ```
 
 > The commit ID, author, and date will be different depending on your repository.
@@ -53,9 +55,10 @@ git log --oneline
 ### Example Output
 
 ```text
-2cc475c Add Git commands reference
-39f556c Update README.md
-e28b9c6 Initial commit
+[root@gitbash demogit]# git log --oneline
+5bb8e2e (HEAD -> main) NTP conf added
+4b393e0 Add server documentation
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -77,26 +80,15 @@ git log --oneline --graph --all
 ### Example Output
 
 ```text
-* 2cc475c Add Git commands reference
-* 39f556c Update README.md
-* e28b9c6 Initial commit
+[root@gitbash demogit]# git log --oneline --graph
+* 5bb8e2e (HEAD -> main) NTP conf added
+* 4b393e0 Add server documentation
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git log --oneline --graph --all
+* 5bb8e2e (HEAD -> main) NTP conf added
+* 4b393e0 Add server documentation
+[root@gitbash demogit]# 
 ```
-
-When multiple branches exist, the graph can look like:
-
-```text
-*   7a12345 Merge feature branch
-|\
-| * 6b23456 Add Linux script
-|/
-* 2cc475c Add Git commands reference
-* 39f556c Update README.md
-```
-
-### Use Case
-
-Useful for understanding branch and merge history.
-
 ---
 
 ## 4. `git show`
@@ -109,22 +101,25 @@ Displays information about a specific commit.
 git show <commit-id>
 ```
 
-### Example
-
-```bash
-git show 2cc475c
-```
 
 ### Example Output
 
 ```text
-commit 2cc475c
-Author: Arul C
+[root@gitbash demogit]# git show 5bb8e2e
+commit 5bb8e2efd06872c54dd60a830ae2ada489a5116a (HEAD -> main)
+Author: Arul C <salemarul1991@gmail.com>
+Date:   Wed Sep 23 10:00:24 2026 +0000
 
-    Add Git commands reference
+    NTP conf added
 
-diff --git a/basics/git-commands.md b/basics/git-commands.md
+diff --git a/ntp.conf b/ntp.conf
 new file mode 100644
+index 0000000..e626b9f
+--- /dev/null
++++ b/ntp.conf
+@@ -0,0 +1 @@
++NTP configuration
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -144,13 +139,13 @@ Displays changes that have been made but are not yet staged.
 Suppose a file contains:
 
 ```text
-Linux Server
+Linux Infrastructure
 ```
 
 You change it to:
 
 ```text
-Linux Infrastructure Server
+Linux Cloud Infrastructure server
 ```
 
 Run:
@@ -162,8 +157,13 @@ git diff
 ### Example Output
 
 ```diff
-- Linux Server
-+ Linux Infrastructure Server
+diff --git a/server.txt b/server.txt
+index ab7bff0..8020a5a 100644
+--- a/server.txt
++++ b/server.txt
+@@ -1 +1 @@
+-Linux Infrastructure
++Linux Cloud Infrastructure server
 ```
 
 The `-` represents the old content.
@@ -183,7 +183,7 @@ Displays changes that have already been added to the staging area.
 ### Commands
 
 ```bash
-git add test.sh
+git add server.txt
 ```
 
 Then:
@@ -195,8 +195,15 @@ git diff --staged
 ### Example Output
 
 ```diff
-- echo "Linux Server"
-+ echo "Linux Infrastructure Server"
+[root@gitbash demogit]# git diff --staged
+diff --git a/server.txt b/server.txt
+index ab7bff0..c5cf900 100644
+--- a/server.txt
++++ b/server.txt
+@@ -1 +1 @@
+-Linux Infrastructure
++Linux Cloud Infrastructure server - RHEL
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -215,6 +222,30 @@ Shows the difference between the current working directory/staging state and the
 git diff HEAD
 ```
 
+```diff
+git diff HEAD
+diff --git a/ntp.conf b/ntp.conf
+index e626b9f..c890cfa 100644
+--- a/ntp.conf
++++ b/ntp.conf
+@@ -1 +1 @@
+-NTP configuration
++NTP configuration setup
+diff --git a/ref.txt b/ref.txt
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/server.txt b/server.txt
+index ab7bff0..c5cf900 100644
+--- a/server.txt
++++ b/server.txt
+@@ -1 +1 @@
+-Linux Infrastructure
++Linux Cloud Infrastructure server - RHEL
+diff --git a/test.txt b/test.txt
+deleted file mode 100644
+index e69de29..0000000
+```
+
 ### Use Case
 
 Useful for reviewing all current changes against the latest committed version.
@@ -231,8 +262,19 @@ git diff <commit1> <commit2>
 
 ### Example
 
-```bash
-git diff 39f556c 2cc475c
+```diff
+[root@gitbash demogit]# git diff 5b8b60b ea14fff
+diff --git a/50-redhat.conf b/50-redhat.conf
+index 354c4c9..66c7d4b 100644
+--- a/50-redhat.conf
++++ b/50-redhat.conf
+@@ -19,4 +19,4 @@ X11Forwarding yes
+ # It is recommended to use pam_motd in /etc/pam.d/sshd instead of PrintMotd,
+ # as it is more configurable and versatile than the built-in version.
+ PrintMotd no
+-PermitRootLogin no
++PermitRootLogin yes
+[root@gitbash demogit]# 
 ```
 
 This shows the differences between the two commits.
@@ -267,6 +309,57 @@ feature-linux
 
 Useful for reviewing changes before merging a feature branch into `main`.
 
+```diff
+[root@gitbash demogit]# git branch
+* main
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git checkout -b feature-linux
+Switched to a new branch 'feature-linux'
+[root@gitbash demogit]# 
+[root@gitbash demogit]# ls -l
+total 12
+-rw-r--r--. 1 root root 737 Sep 23 10:19 50-redhat.conf
+-rw-r--r--. 1 root root  24 Sep 23 10:10 ntp.conf
+-rw-r--r--. 1 root root  41 Sep 23 10:08 server.txt
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git branch
+* feature-linux
+  main
+[root@gitbash demogit]# vi ntp.conf    
+[root@gitbash demogit]# git add ntp.conf 
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git diff main feature-linux
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git commit -m "NTP at feature branch"
+[feature-linux 1498157] NTP at feature branch
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git diff main feature-linux
+diff --git a/ntp.conf b/ntp.conf
+index e626b9f..d1692ab 100644
+--- a/ntp.conf
++++ b/ntp.conf
+@@ -1 +1 @@
+-NTP configuration
++NTP configuration - changed at feature branch
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git checkout main
+D       java.txt
+D       network.txt
+D       ref.txt
+D       test.txt
+Switched to branch 'main'
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git diff main feature-linux
+diff --git a/ntp.conf b/ntp.conf
+index e626b9f..d1692ab 100644
+--- a/ntp.conf
++++ b/ntp.conf
+@@ -1 +1 @@
+-NTP configuration
++NTP configuration - changed at feature branch
+[root@gitbash demogit]#
+```
 ---
 
 ## 10. Compare a Specific File
@@ -274,13 +367,24 @@ Useful for reviewing changes before merging a feature branch into `main`.
 You can compare a specific file between commits:
 
 ```bash
-git diff <commit1> <commit2> -- README.md
+git diff <commit1> <commit2> -- 50-redhat.conf
 ```
 
 ### Example
 
 ```bash
-git diff 39f556c 2cc475c -- README.md
+[root@gitbash demogit]# git diff 5b8b60b ea14fff -- 50-redhat.conf
+diff --git a/50-redhat.conf b/50-redhat.conf
+index 354c4c9..66c7d4b 100644
+--- a/50-redhat.conf
++++ b/50-redhat.conf
+@@ -19,4 +19,4 @@ X11Forwarding yes
+ # It is recommended to use pam_motd in /etc/pam.d/sshd instead of PrintMotd,
+ # as it is more configurable and versatile than the built-in version.
+ PrintMotd no
+-PermitRootLogin no
++PermitRootLogin yes
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -304,12 +408,16 @@ git show --stat HEAD
 ### Example Output
 
 ```text
-commit 2cc475c
+[root@gitbash demogit]# git show --stat HEAD
+commit 1498157e8233f5c8ec4ea29cbabb7f46d1b0f755 (HEAD -> main, feature-linux)
+Author: Arul C <salemarul1991@gmail.com>
+Date:   Wed Sep 23 10:27:37 2026 +0000
 
-    Add Git commands reference
+    NTP at feature branch
 
- basics/git-commands.md | 120 +++++++++++++++++++++
- 1 file changed, 120 insertions(+)
+ ntp.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -333,7 +441,9 @@ git rev-parse HEAD
 ### Example Output
 
 ```text
-2cc475c6959ddb856256d5f5d86e708fa6d3fa68
+[root@gitbash demogit]# git rev-parse HEAD
+1498157e8233f5c8ec4ea29cbabb7f46d1b0f755
+[root@gitbash demogit]# 
 ```
 
 ### Use Case
@@ -342,69 +452,6 @@ Useful when you need the exact commit identifier for troubleshooting or comparis
 
 ---
 
-# Practical Linux Infrastructure Example
-
-Consider a Linux server configuration stored in Git.
-
-Before a change:
-
-```text
-/etc/ssh/sshd_config
-```
-
-Suppose an administrator changes:
-
-```text
-PermitRootLogin no
-```
-
-to:
-
-```text
-PermitRootLogin prohibit-password
-```
-
-Before committing the change:
-
-```bash
-git diff
-```
-
-The administrator can review the change.
-
-Then:
-
-```bash
-git add sshd_config
-```
-
-Review the staged change:
-
-```bash
-git diff --staged
-```
-
-Commit the change:
-
-```bash
-git commit -m "Update SSH root login configuration"
-```
-
-Later, the administrator can investigate the change using:
-
-```bash
-git log
-```
-
-or:
-
-```bash
-git show <commit-id>
-```
-
-This provides a history of infrastructure changes.
-
----
 
 # Git Review Workflow
 
