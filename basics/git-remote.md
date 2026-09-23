@@ -49,7 +49,7 @@ https://github.com/arul-c-infra/git-linux-infra
 
 ## 2. Check Existing Remotes
 
-Command:
+**Command:**
 
 ```bash
 git remote
@@ -67,11 +67,18 @@ To see the remote URL:
 git remote -v
 ```
 
-Example:
+**Example:**
 
 ```text
+[root@gitbash branch]# git remote add origin https://github.com/arul-c-infra/git-linux-infra.git
+[root@gitbash branch]#
+[root@gitbash branch]# git remote
+origin
+[root@gitbash branch]# 
+[root@gitbash branch]# git remote -v
 origin  https://github.com/arul-c-infra/git-linux-infra.git (fetch)
 origin  https://github.com/arul-c-infra/git-linux-infra.git (push)
+[root@gitbash branch]# 
 ```
 
 ### Fetch vs Push
@@ -105,6 +112,32 @@ You can verify it:
 
 ```bash
 git remote -v
+```
+
+Example:
+
+```bash
+[root@gitbash branch]# git clone https://github.com/arul-c-infra/git-linux-infra.git
+Cloning into 'git-linux-infra'...
+remote: Enumerating objects: 63, done.
+remote: Counting objects: 100% (63/63), done.
+remote: Compressing objects: 100% (58/58), done.
+remote: Total 63 (delta 18), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (63/63), 31.49 KiB | 6.30 MiB/s, done.
+Resolving deltas: 100% (18/18), done.
+[root@gitbash branch]#
+[root@gitbash branch]# ls -l
+total 8
+-rw-r--r--. 1 root root 45 Sep 23 12:00 dev.conf
+drwxr-xr-x. 4 root root 49 Sep 23 12:38 git-linux-infra
+-rw-r--r--. 1 root root 51 Sep 23 11:59 patching.md
+[root@gitbash branch]# 
+[root@gitbash branch]# cd git-linux-infra/
+[root@gitbash git-linux-infra]# ls -l
+total 4
+-rw-r--r--. 1 root root 2519 Sep 23 12:38 README.md
+drwxr-xr-x. 2 root root  148 Sep 23 12:38 basics
+[root@gitbash git-linux-infra]# 
 ```
 
 ---
