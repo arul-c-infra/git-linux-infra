@@ -1,7 +1,4 @@
-# git-linux-infra
-Git and GitHub practices for Linux and Infrastructure Administration
 # Git & GitHub for Linux Infrastructure
-
 A practical collection of Git and GitHub commands, workflows, and examples used for Linux administration and infrastructure engineering.
 
 ## 👨‍💻 About This Repository
