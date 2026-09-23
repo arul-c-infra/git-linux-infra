@@ -1,474 +1,418 @@
-# Git Log and Diff
+# Git init
+# Git Init, Add and Commit
 
-This guide covers Git commands used to review commit history, inspect commits, and identify changes between files, commits, and branches.
-
-These commands are useful for Linux administrators and infrastructure engineers when reviewing changes to scripts, configuration files, Dockerfiles, Kubernetes manifests, Ansible playbooks, and infrastructure code.
+This guide explains the basic Git workflow using `git init`, `git add`, and `git commit`.
 
 ---
 
-## 1. `git log`
+## 1. Git Init
 
-Displays the commit history of the current repository.
+`git init` initializes a new Git repository in the current directory.
 
 ### Command
 
 ```bash
-git log
+git init
 ```
 
-### Example Output
+### Example
+
+```bash
+mkdir linux-project
+cd linux-project
+git init
+```
+
+### Expected Output
 
 ```text
-commit 2cc475c6959ddb856256d5f5d86e708fa6d3fa68
-Author: Arul C
-Date:   Wed Sep 23 2026
-
-    Add Git commands reference
-
-commit 39f556c37432fa56e227e5163b4d1a8b5e965519
-Author: Arul C
-Date:   Wed Sep 23 2026
-
-    Update README.md
+Initialized empty Git repository in /home/ec2-user/linux-project/.git/
 ```
 
-> The commit ID, author, and date will be different depending on your repository.
+The `.git` directory contains the Git repository metadata.
 
-### Use Case
+### Verify
 
-Useful for checking the history of changes made to a repository.
+```bash
+ls -la
+```
+
+You should see:
+
+```text
+.git
+```
+
+### Check Repository Status
+
+```bash
+git status
+```
+
+Example:
+
+```text
+On branch main
+
+No commits yet
+
+nothing to commit
+```
+
+> **Note:** Use `git init` when starting a new local Git repository. If a repository already exists on GitHub, normally use `git clone` instead.
 
 ---
 
-## 2. `git log --oneline`
+## 2. Git Add
 
-Displays commit history in a compact format.
+`git add` moves changes from the **working directory** to the **staging area**.
+
+### Create a File
+
+```bash
+echo "Linux Infrastructure" > server.txt
+```
+
+Check the status:
+
+```bash
+git status
+```
+
+Example:
+
+```text
+Untracked files:
+  server.txt
+```
+
+### Add a Specific File
+
+```bash
+git add server.txt
+```
+
+Check again:
+
+```bash
+git status
+```
+
+Example:
+
+```text
+Changes to be committed:
+  new file: server.txt
+```
+
+### Add Multiple Files
+
+```bash
+git add file1.txt file2.txt
+```
+
+### Add All Changes
+
+```bash
+git add .
+```
+
+> `git add .` stages new files, modified files, and deleted files under the current directory.
+
+---
+
+## 3. Git Commit
+
+`git commit` saves the staged changes into the local Git repository.
 
 ### Command
+
+```bash
+git commit -m "Add server documentation"
+```
+
+Example output:
+
+```text
+[main abc1234] Add server documentation
+ 1 file changed, 1 insertion(+)
+ create mode 100644 server.txt
+```
+
+### Verify the Commit
 
 ```bash
 git log --oneline
 ```
 
-### Example Output
+Example:
 
 ```text
-2cc475c Add Git commands reference
-39f556c Update README.md
-e28b9c6 Initial commit
+abc1234 Add server documentation
 ```
-
-### Use Case
-
-Useful when you want to quickly review recent commits.
 
 ---
 
-## 3. `git log --oneline --graph`
+## 4. Basic Git Workflow
 
-Displays commits in a simple graphical structure.
-
-### Command
-
-```bash
-git log --oneline --graph --all
-```
-
-### Example Output
+The basic workflow is:
 
 ```text
-* 2cc475c Add Git commands reference
-* 39f556c Update README.md
-* e28b9c6 Initial commit
+Working Directory
+       |
+       | git add
+       v
+Staging Area
+       |
+       | git commit
+       v
+Local Repository
 ```
-
-When multiple branches exist, the graph can look like:
-
-```text
-*   7a12345 Merge feature branch
-|\
-| * 6b23456 Add Linux script
-|/
-* 2cc475c Add Git commands reference
-* 39f556c Update README.md
-```
-
-### Use Case
-
-Useful for understanding branch and merge history.
-
----
-
-## 4. `git show`
-
-Displays information about a specific commit.
-
-### Command
-
-```bash
-git show <commit-id>
-```
-
-### Example
-
-```bash
-git show 2cc475c
-```
-
-### Example Output
-
-```text
-commit 2cc475c
-Author: Arul C
-
-    Add Git commands reference
-
-diff --git a/basics/git-commands.md b/basics/git-commands.md
-new file mode 100644
-```
-
-### Use Case
-
-Useful when you need to investigate exactly what was changed in a particular commit.
-
----
-
-# Git Diff
-
-## 5. `git diff`
-
-Displays changes that have been made but are not yet staged.
-
-### Example
-
-Suppose a file contains:
-
-```text
-Linux Server
-```
-
-You change it to:
-
-```text
-Linux Infrastructure Server
-```
-
-Run:
-
-```bash
-git diff
-```
-
-### Example Output
-
-```diff
-- Linux Server
-+ Linux Infrastructure Server
-```
-
-The `-` represents the old content.
-
-The `+` represents the new content.
-
-### Use Case
-
-Review changes before adding them to the staging area.
-
----
-
-## 6. `git diff --staged`
-
-Displays changes that have already been added to the staging area.
 
 ### Commands
 
 ```bash
-git add test.sh
+git status
+git add .
+git status
+git commit -m "Add documentation"
+git log --oneline
 ```
-
-Then:
-
-```bash
-git diff --staged
-```
-
-### Example Output
-
-```diff
-- echo "Linux Server"
-+ echo "Linux Infrastructure Server"
-```
-
-### Use Case
-
-Useful for reviewing exactly what will be included in the next commit.
 
 ---
 
-## 7. `git diff HEAD`
+## 5. Example: Complete Workflow
 
-Shows the difference between the current working directory/staging state and the latest commit.
-
-### Command
+Create a new project:
 
 ```bash
-git diff HEAD
+mkdir linux-project
+cd linux-project
 ```
 
-### Use Case
-
-Useful for reviewing all current changes against the latest committed version.
-
----
-
-## 8. Compare Two Commits
-
-You can compare two commits using:
+Initialize Git:
 
 ```bash
-git diff <commit1> <commit2>
+git init
 ```
 
-### Example
+Create a file:
 
 ```bash
-git diff 39f556c 2cc475c
+echo "Linux Server Administration" > README.md
 ```
 
-This shows the differences between the two commits.
-
-### Use Case
-
-Useful when investigating what changed between two versions of infrastructure code.
-
----
-
-## 9. Compare Two Branches
-
-You can compare two branches:
+Check status:
 
 ```bash
-git diff main feature-linux
+git status
 ```
 
-### Example
-
-```text
-main
-   │
-   └── Current production version
-
-feature-linux
-   │
-   └── Proposed changes
-```
-
-### Use Case
-
-Useful for reviewing changes before merging a feature branch into `main`.
-
----
-
-## 10. Compare a Specific File
-
-You can compare a specific file between commits:
+Stage the file:
 
 ```bash
-git diff <commit1> <commit2> -- README.md
+git add README.md
 ```
 
-### Example
+Check staged changes:
 
 ```bash
-git diff 39f556c 2cc475c -- README.md
-```
-
-### Use Case
-
-Useful when you only want to review changes to one file.
-
----
-
-# Viewing Commit Statistics
-
-## 11. `git show --stat`
-
-Displays a summary of files changed by a commit.
-
-### Command
-
-```bash
-git show --stat HEAD
-```
-
-### Example Output
-
-```text
-commit 2cc475c
-
-    Add Git commands reference
-
- basics/git-commands.md | 120 +++++++++++++++++++++
- 1 file changed, 120 insertions(+)
-```
-
-### Use Case
-
-Useful for getting a quick overview without displaying the complete diff.
-
----
-
-# Viewing the Current Commit
-
-## 12. `git rev-parse HEAD`
-
-Displays the full commit ID of the current `HEAD`.
-
-### Command
-
-```bash
-git rev-parse HEAD
-```
-
-### Example Output
-
-```text
-2cc475c6959ddb856256d5f5d86e708fa6d3fa68
-```
-
-### Use Case
-
-Useful when you need the exact commit identifier for troubleshooting or comparison.
-
----
-
-# Practical Linux Infrastructure Example
-
-Consider a Linux server configuration stored in Git.
-
-Before a change:
-
-```text
-/etc/ssh/sshd_config
-```
-
-Suppose an administrator changes:
-
-```text
-PermitRootLogin no
-```
-
-to:
-
-```text
-PermitRootLogin prohibit-password
-```
-
-Before committing the change:
-
-```bash
-git diff
-```
-
-The administrator can review the change.
-
-Then:
-
-```bash
-git add sshd_config
-```
-
-Review the staged change:
-
-```bash
-git diff --staged
+git status
 ```
 
 Commit the change:
 
 ```bash
-git commit -m "Update SSH root login configuration"
+git commit -m "Add Linux administration README"
 ```
 
-Later, the administrator can investigate the change using:
+View commit history:
 
 ```bash
-git log
+git log --oneline
 ```
-
-or:
-
-```bash
-git show <commit-id>
-```
-
-This provides a history of infrastructure changes.
 
 ---
 
-# Git Review Workflow
+## 6. Git Status
 
-A typical workflow is:
+`git status` is one of the most important Git commands.
+
+```bash
+git status
+```
+
+It shows:
+
+* Current branch
+* Untracked files
+* Modified files
+* Staged files
+* Changes ready for commit
+
+For Linux infrastructure work, use `git status` frequently before committing changes.
+
+---
+
+## 7. Git Add vs Git Commit
+
+| Command      | Purpose                                 |
+| ------------ | --------------------------------------- |
+| `git init`   | Create a new local Git repository       |
+| `git add`    | Move changes to staging area            |
+| `git commit` | Save staged changes to local repository |
+| `git status` | Check current Git state                 |
+| `git log`    | View commit history                     |
+
+---
+
+## 8. Important Difference
+
+### `git add`
+
+```bash
+git add server.conf
+```
+
+Means:
+
+> "I want this change to be included in my next commit."
+
+### `git commit`
+
+```bash
+git commit -m "Update server configuration"
+```
+
+Means:
+
+> "Save the staged changes as a Git commit."
+
+---
+
+## 9. Git Init vs Git Clone
+
+### New local project
+
+Use:
+
+```bash
+git init
+```
+
+Example:
+
+```bash
+mkdir my-project
+cd my-project
+git init
+```
+
+### Existing GitHub repository
+
+Use:
+
+```bash
+git clone https://github.com/arul-c-infra/git-linux-infra.git
+```
+
+Then:
+
+```bash
+cd git-linux-infra
+```
+
+**Do not normally run `git init` inside a repository that you have already cloned.**
+
+---
+
+## 10. Linux Infrastructure Example
+
+Suppose a Linux administrator creates a configuration documentation file:
+
+```bash
+echo "NTP configuration" > ntp-config.md
+```
+
+Check:
+
+```bash
+git status
+```
+
+Stage:
+
+```bash
+git add ntp-config.md
+```
+
+Review:
+
+```bash
+git diff --staged
+```
+
+Commit:
+
+```bash
+git commit -m "Add NTP configuration documentation"
+```
+
+Verify:
+
+```bash
+git log --oneline
+```
+
+This provides a basic audit trail of infrastructure documentation changes.
+
+---
+
+## Key Takeaways
 
 ```text
-Make Changes
-     |
-     v
-git diff
-     |
-     v
-Review Changes
-     |
-     v
-git add .
-     |
-     v
-git diff --staged
-     |
-     v
-Review Staged Changes
-     |
-     v
+git init
+    ↓
+Create Git repository
+
+git add
+    ↓
+Stage changes
+
 git commit
-     |
-     v
-git log
-     |
-     v
-git push
+    ↓
+Save changes to local repository
 ```
 
----
+### Remember
 
-# Git Log and Diff Commands Summary
+```bash
+git init
+git status
+git add .
+git status
+git commit -m "Meaningful commit message"
+git log --oneline
+```
 
-| Command                           | Purpose                             |
-| --------------------------------- | ----------------------------------- |
-| `git log`                         | View commit history                 |
-| `git log --oneline`               | View compact commit history         |
-| `git log --oneline --graph --all` | View commit and branch history      |
-| `git show <commit>`               | Inspect a specific commit           |
-| `git diff`                        | View unstaged changes               |
-| `git diff --staged`               | View staged changes                 |
-| `git diff HEAD`                   | Compare current changes with `HEAD` |
-| `git diff A B`                    | Compare two commits                 |
-| `git diff main feature`           | Compare two branches                |
-| `git show --stat HEAD`            | View commit statistics              |
-| `git rev-parse HEAD`              | Display current commit ID           |
+The complete workflow is:
 
----
+**Working Directory → Staging Area → Local Repository**
 
-# Key Takeaways
-
-Git log and diff commands help infrastructure engineers:
-
-* Review configuration changes
-* Track infrastructure history
-* Compare different versions
-* Review changes before committing
-* Investigate previous commits
-* Understand branch history
-* Maintain change traceability
-* Support troubleshooting and rollback investigations
-
-These commands are especially useful when managing Linux scripts, configuration files, Ansible playbooks, Dockerfiles, Kubernetes manifests, Terraform code, and cloud infrastructure code.
+```bash
+[root@gitbash /]# mkdir demogit
+[root@gitbash /]# 
+[root@gitbash /]# cd demogit/
+[root@gitbash demogit]# 
+[root@gitbash demogit]# git init
+Initialized empty Git repository in /demogit/.git/
+[root@gitbash demogit]# 
+[root@gitbash demogit]# ls -l
+total 0
+[root@gitbash demogit]# ls -la
+total 0
+drwxr-xr-x.  3 root root  18 Sep 23 09:27 .
+dr-xr-xr-x. 19 root root 252 Sep 23 09:27 ..
+drwxr-xr-x.  6 root root 103 Sep 23 09:27 .git
+[root@gitbash demogit]#
+```
