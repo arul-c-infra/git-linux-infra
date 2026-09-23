@@ -89,8 +89,6 @@ Complete!
 git version 2.50.1
 [root@gitbash ec2-user]# 
 ```
-
-
 ---
 
 ## 2. Configure User Name
@@ -132,6 +130,16 @@ git config --global user.email
 
 > Use the email address associated with your GitHub account when appropriate.
 
+**Output:**
+
+```bash
+[root@gitbash ec2-user]# git config --global user.email "salemarul1991@gmail.com"
+[root@gitbash ec2-user]# 
+[root@gitbash ec2-user]# git config --global user.email
+salemarul1991@gmail.com
+[root@gitbash ec2-user]# 
+```
+
 ---
 
 ## 4. View Global Configuration
@@ -140,13 +148,14 @@ git config --global user.email
 git config --global --list
 ```
 
-Example:
+**Output:**
 
-```text
+```bash
+[root@gitbash ec2-user]# git config --global --list
 user.name=Arul C
-user.email=your-email@example.com
+user.email=salemarul1991@gmail.com
+[root@gitbash ec2-user]#
 ```
-
 ---
 
 ## 5. View All Configuration
@@ -157,6 +166,12 @@ git config --list
 
 This displays configuration values from the applicable Git configuration levels.
 
+```bash
+[root@gitbash ec2-user]# git config --list
+user.name=Arul C
+user.email=salemarul1991@gmail.com
+[root@gitbash ec2-user]#
+```
 ---
 
 ## 6. Configuration Levels
@@ -204,7 +219,14 @@ Verify:
 ```bash
 git config --global init.defaultBranch
 ```
-
+**Output:**
+```bash
+[root@gitbash ec2-user]# git config --global init.defaultBranch main
+[root@gitbash ec2-user]# 
+[root@gitbash ec2-user]# git config --global init.defaultBranch
+main
+[root@gitbash ec2-user]#
+```
 ---
 
 ## 8. Configure Git Editor
@@ -220,6 +242,11 @@ Or configure VS Code:
 ```bash
 git config --global core.editor "code --wait"
 ```
+**Output:**
+```bash
+[root@gitbash ec2-user]# git config --global core.editor "vim"
+[root@gitbash ec2-user]# 
+```
 
 ---
 
@@ -230,17 +257,39 @@ git config --global core.editor "code --wait"
 ```bash
 git config --list
 ```
+**Output:**
+```bash
+[root@gitbash ec2-user]# git config --list
+user.name=Arul C
+user.email=salemarul1991@gmail.com
+init.defaultbranch=main
+core.editor=vim
+[root@gitbash ec2-user]#
+```
 
 ### Get a specific value
 
 ```bash
 git config user.name
 ```
+**Output:**
+```bash
+[root@gitbash ec2-user]# git config user.name
+Arul C
+[root@gitbash ec2-user]#
+```
 
 ### Remove a configuration value
 
 ```bash
 git config --global --unset user.name
+```
+**Output:**
+```bash
+[root@gitbash ec2-user]# git config --global --unset user.name
+[root@gitbash ec2-user]# 
+[root@gitbash ec2-user]# git config user.name
+[root@gitbash ec2-user]#
 ```
 
 ### Edit the global configuration file
@@ -249,6 +298,16 @@ git config --global --unset user.name
 git config --global --edit
 ```
 
+```bash
+[user]
+        email = salemarul1991@gmail.com
+        name = Arul C
+[init]
+        defaultBranch = main
+[core]
+        editor = vim
+~
+```
 ---
 
 ## 10. Configuration File
@@ -259,10 +318,18 @@ The global Git configuration is commonly stored in:
 ~/.gitconfig
 ```
 
-View it:
+**Output:**
 
 ```bash
-cat ~/.gitconfig
+[root@gitbash ec2-user]# cat ~/.gitconfig
+[user]
+        email = salemarul1991@gmail.com
+        name = Arul C
+[init]
+        defaultBranch = main
+[core]
+        editor = vim
+[root@gitbash ec2-user]# 
 ```
 
 ---
@@ -278,20 +345,6 @@ Git configuration is important when Linux administrators maintain:
 * Terraform files
 * CloudFormation templates
 * Infrastructure documentation
-
-Example:
-
-```bash
-git config --global user.name "Arul C"
-git config --global user.email "your-email@example.com"
-git config --global init.defaultBranch main
-```
-
-Then verify:
-
-```bash
-git config --global --list
-```
 
 ---
 
