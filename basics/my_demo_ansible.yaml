@@ -1,0 +1,13 @@
+---
+- name: Linux Administrator Information
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Display user information
+      debug:
+        msg: "Welcome Arul! Let's learn Ansible."
+
+    - name: Display Linux information
+      debug:
+        msg: "Ansible is automating Linux administration."
